@@ -1,87 +1,78 @@
-# Project Title
+# Exhibitors Code System
 
-One Paragraph of project description goes here
+Another Wordpress plugin... which allows you to generate automatically or manual codes for exhibitors and more.
 
 ## Getting Started
 
-These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See deployment for notes on how to deploy the project on a live system.
-
-### Prerequisites
-
-What things you need to install the software and how to install them
-
-```
-Give examples
-```
+Make sure You are using Gravity Forms and Wordpress 4.9+
 
 ### Installing
 
-A step by step series of examples that tell you how to get a development env running
+First of all You need to make form in Gravity Forms plugin. 
 
-Say what the step will be
+#### Creating a form for check entered code before access to form. 
 
-```
-Give the example
-```
-
-And repeat
+Create new form in Gravity Forms and add that one field to form's fields:
 
 ```
-until finished
+type = Single Line Text
 ```
 
-End with an example of getting some data out of the system or using it for a little demo
-
-## Running the tests
-
-Explain how to run the automated tests for this system
-
-### Break down into end to end tests
-
-Explain what these tests test and why
+And add class:
 
 ```
-Give an example
+invitation_code
 ```
 
-### And coding style tests
+* Add this field in confirmations for Form admin.
 
-Explain what these tests test and why
+Thats all in Gravity Forms, now create a new Wordpress Page and set 'Page Template' to 'Exhibitors Code Checker'. Then insert in Your page content form You created in Gravity Forms.
+
+Enjoy!
+
+#### Creating a form for automaticaly generate invitation code for exhibitors. 
+
+Create new form in Gravity Forms and add that one field to form's fields:
 
 ```
-Give an example
+type = Single Line Text
 ```
 
-## Deployment
+And add class:
 
-Add additional notes about how to deploy this on a live system
+```
+code
+```
+
+* Add this field in confirmations for exhibitor.
+
+Go to plugin settings and set prefix for automatically generating exhibitors invitation code. For example:
+
+```
+XYZ2102
+```
+
+* Individual Code for Exhibitor is generating this way: 'prefix_you_set'+'amount of exhibitors in current form base'. For example:
+```
+XYZ21021
+```
+
+Set Your Grafity Form ID that You want to generate codes.
+
+* Optional: Set Your own list of codes comma separated - **no comma at the end**
+
+Thats all in Gravity Forms, now create a new Wordpress Page and set 'Page Template' to 'Exhibitors Code Maker'. Then insert in Your page content form You created in Gravity Forms.
+
+Enjoy!
+
+* Don't forget about link to Your Page Checker in notification for exhibitor.
 
 ## Built With
 
-* [Dropwizard](http://www.dropwizard.io/1.0.2/docs/) - The web framework used
-* [Maven](https://maven.apache.org/) - Dependency Management
-* [ROME](https://rometools.github.io/rome/) - Used to generate RSS Feeds
-
-## Contributing
-
-Please read [CONTRIBUTING.md](https://gist.github.com/PurpleBooth/b24679402957c63ec426) for details on our code of conduct, and the process for submitting pull requests to us.
-
-## Versioning
-
-We use [SemVer](http://semver.org/) for versioning. For the versions available, see the [tags on this repository](https://github.com/your/project/tags). 
+* [Gravity Forms](https://www.gravityforms.com/) - The Wordpress Plugin
+* [Plugin Update Checker](https://github.com/YahnisElsts/plugin-update-checker) - Update Checker for Wordpress Plugins and Themes
+* [jQuery](https://jquery.com/) - JavaSript Library
 
 ## Authors
 
-* **Billie Thompson** - *Initial work* - [PurpleBooth](https://github.com/PurpleBooth)
-
-See also the list of [contributors](https://github.com/your/project/contributors) who participated in this project.
-
-## License
-
-This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details
-
-## Acknowledgments
-
-* Hat tip to anyone whose code was used
-* Inspiration
-* etc
+* **Szymon Kaluga** - [github](https://github.com/szymoff) - [github](http://skaluga.pl) 

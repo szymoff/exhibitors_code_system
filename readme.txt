@@ -1,67 +1,105 @@
 === Exhibitors Code System ===
 Tags: exhibitors, codes, dynamic and manual generating codes
 Requires at least: 4.9
-Tested up to: 5.0
-Stable tag: 1.2
+Tested up to: 5.2
+Stable tag: 1.5
 Requires PHP: 5.2.4
-License: GPLv2 or later
-License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
-Plugin for PWE, dynamic and manual generating exhibitors codes.
+Another Wordpress plugin... which allows you to generate automatically or manual codes for exhibitors and more.
 
 == Description ==
 
-Plugin for PWE, dynamic and manual generating exhibitors codes.
+Another Wordpress plugin... which allows you to generate automatically or manual codes for exhibitors and check this codes.
 
 == Installation ==
 
-This section describes how to install the plugin and get it working.
+First of all You need to make form in Gravity Forms plugin. 
 
-e.g.
+#### Creating a form for check entered code before access to form. 
 
-1. Upload the plugin files to the `/wp-content/plugins/plugin-name` directory, or install the plugin through the WordPress plugins screen directly.
-1. Activate the plugin through the 'Plugins' screen in WordPress
-1. Use the Settings->Plugin Name screen to configure the plugin
-1. (Make your instructions match the desired user flow for activating and installing your plugin. Include any steps that might be needed for explanatory purposes)
+Create new form in Gravity Forms and add that one field to form's fields:
+
+```
+type = Single Line Text
+```
+
+And add class:
+
+```
+invitation_code
+```
+
+* Add this field in confirmations for Form admin.
+
+Thats all in Gravity Forms, now create a new Wordpress Page and set 'Page Template' to 'Exhibitors Code Checker'. Then insert in Your page content form You created in Gravity Forms.
+
+Enjoy!
+
+#### Creating a form for automaticaly generate invitation code for exhibitors. 
+
+Create new form in Gravity Forms and add that one field to form's fields:
+
+```
+type = Single Line Text
+```
+
+And add class:
+
+```
+code
+```
+
+* Add this field in confirmations for exhibitor.
+
+Go to plugin settings and set prefix for automatically generating exhibitors invitation code. For example:
+
+```
+XYZ2102
+```
+
+* Individual Code for Exhibitor is generating this way: 'prefix_you_set'+'amount of exhibitors in current form base'. For example:
+```
+XYZ21021
+```
+
+Set Your Grafity Form ID that You want to generate codes.
+
+* Optional: Set Your own list of codes comma separated - **no comma at the end**
+
+Thats all in Gravity Forms, now create a new Wordpress Page and set 'Page Template' to 'Exhibitors Code Maker'. Then insert in Your page content form You created in Gravity Forms.
+
+Enjoy!
+
+* Don't forget about link to Your Page Checker in notification for exhibitor.
 
 
-== Frequently Asked Questions ==
+== FAQ ==
 
-= A question that someone might have =
+= Can I set only one type of page or should I create both =
 
-An answer to that question.
+Yes, You can create one of two available pages (Code Maker or Code Checker).
 
-= What about foo bar? =
+= Can I set only dynamic generating or manually generated codes list?  =
 
-Answer to foo bar dilemma.
+Yes, You can use only one type of Codes List - manually entered or make them dynamic while user is registrating. But both of this options will work great as well. 
 
-== Screenshots ==
-
-1. This screen shot description corresponds to screenshot-1.(png|jpg|jpeg|gif). Note that the screenshot is taken from
-the /assets directory or the directory that contains the stable readme.txt (tags or trunk). Screenshots in the /assets
-directory take precedence. For example, `/assets/screenshot-1.png` would win over `/tags/4.3/screenshot-1.png`
-(or jpg, jpeg, gif).
-2. This is the second screen shot
 
 == Changelog ==
 
+= 1.5 =
+Version with clean code and after optimizations.
+
+= 1.4 =
+Version with readme.md
+
+= 1.3 =
+Version with readme.txt
+
+= 1.2 =
+Version with AutoUpdate.
+
+= 1.1 =
+First version with dynamic inluding page template.
+
 = 1.0 =
-* A change since the previous version.
-* Another change.
-
-= 0.5 =
-* List versions from most recent at top to oldest at bottom.
-
-== Upgrade Notice ==
-
-= 1.0 =
-Upgrade notices describe the reason a user should upgrade.  No more than 300 characters.
-
-= 0.5 =
-This version fixes a security related bug.  Upgrade immediately.
-
-== Arbitrary section ==
-
-You may provide arbitrary sections, in the same format as the ones above.  This may be of use for extremely complicated
-plugins where more information needs to be conveyed that doesn't fit into the categories of "description" or
-"installation."  Arbitrary sections will be shown below the built-in sections outlined above.
+First stable version.
