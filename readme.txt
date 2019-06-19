@@ -1,7 +1,7 @@
 === Exhibitors Code System ===
 Tags: exhibitors, codes, dynamic and manual generating codes
 Requires at least: 4.9
-Tested up to: 5.2
+Tested up to: 4.2
 Stable tag: 1.5
 Requires PHP: 5.2.4
 
