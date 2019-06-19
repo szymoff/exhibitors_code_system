@@ -75,4 +75,4 @@ Enjoy!
 
 ## Authors
 
-* **Szymon Kaluga** - [github](https://github.com/szymoff) - [github](http://skaluga.pl) 
+* **Szymon Kaluga** - [github](https://github.com/szymoff) - [website](http://skaluga.pl) 
