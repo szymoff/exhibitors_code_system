@@ -2,12 +2,20 @@
 /*
 Plugin Name: Form Exhibitors Code System
 Description: Wtyczka umożliwiająca generowanie kodów zaproszeniowych dla wystawców oraz tworzenie 'reflinków'.
-Version: 1.0.0
+Version: 1.3
 Author: Szymon Kaluga
 Author URI: http://skaluga.pl/
 */
 
+include( plugin_dir_path( __FILE__ ) . 'plugin-update-checker/plugin-update-checker.php');
 
+$myUpdateChecker = Puc_v4_Factory::buildUpdateChecker(
+	'https://github.com/szymoff/exhibitors_code_system',
+	__FILE__,
+	'exhibitors-code-system'
+);
+
+$myUpdateChecker->getVcsApi()->enableReleaseAssets();
 
 
 class PageTemplater {
