@@ -1,7 +1,7 @@
 === Exhibitors Code System ===
 Tags: exhibitors, codes, dynamic and manual generating codes
-Requires at least: 4.9
-Tested up to: 4.2
+Requires at least: 4.7
+Tested up to: 5.3
 Stable tag: 1.5
 Requires PHP: 5.2.4
 
@@ -85,6 +85,9 @@ Yes, You can use only one type of Codes List - manually entered or make them dyn
 
 
 == Changelog ==
+
+= 1.6 =
+Added CSV Import
 
 = 1.5 =
 Version with clean code and after optimizations.

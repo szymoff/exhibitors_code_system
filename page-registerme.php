@@ -2,8 +2,8 @@
 	function javascript_shortcode() {
 		ob_start();
 		// $form_id = mysqli_real_escape_string ($form_id);
-		$form_id = get_option('form-id'); //FORM PREFIX
-		$code_prefix = get_option('code-prefix'); // PASSWORD PREFIX
+		$form_id = get_option('form_id'); //FORM PREFIX
+		$code_prefix = get_option('code_prefix'); // PASSWORD PREFIX
 		$query = "SELECT * FROM `wp_gf_entry` WHERE `form_id` = '$form_id'";
 		require_once(ABSPATH . 'wp-config.php');
 		$connection = mysqli_connect(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME);

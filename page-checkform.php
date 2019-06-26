@@ -1,6 +1,16 @@
 <?php
 	// Exhibitors Codes List
-	$existExhibitors = explode(', ', get_option('code-list'));
+	$existExhibitors = explode(', ', get_option('code_list'));
+	// Make CSV file Array
+	$csv_array = array();
+	if (($handle = fopen(get_option("csv_file"), "r")) !== FALSE) {
+		while (($data = fgetcsv($handle, 2048, ",")) !== FALSE) {
+			$num = count($data);
+			for ($c=0; $c < $num; $c++) {
+				array_push($csv_array, $data[$c]);
+			}
+		}
+	}    
 	// JavaScript Shortcode
 	function styles_shortcode() {
 		ob_start();
@@ -41,16 +51,16 @@
 			}
 		</style>
 			<div class="container relative text-center form-check-container">
-			<h1>Wpisz kod zaproszenia, który otrzymałeś od wystawcy</h1>
-			<h3>Zostaniesz przekierowany wtedy do formularza rejestracji</h3>
+			<h1><?php echo get_option('h1_heading'); ?></h1>
+			<h3><?php echo get_option('h3_heading'); ?></h3>
 				<form id="check_user" method="GET" action="">
 					<input type="text" id="input_value" name="input_value" />
-					<button type="submit" class="btn btn-success" name="save" id="save">WYŚLIJ</button>
+					<button type="submit" class="btn btn-success" name="save" id="save"><?php echo get_option('button_text'); ?></button>
 				</form>
 			</div>
 		<?php 
-		if ((!empty($_GET["input_value"]) && !mysqli_num_rows(mysqli_query($connect, $check_code_query)) > 0) || (!empty($_GET["input_value"]) && !in_array($passcode, $existExhibitors))){
-			echo "<h2 class='text-center text-danger mb-5'>Błędny kod</h2>";
+		if ((!empty($_GET["input_value"]) && !mysqli_num_rows(mysqli_query($connect, $check_code_query)) > 0) || (!empty($_GET["input_value"]) && !in_array($passcode, $existExhibitors)) || (!empty($_GET["input_value"]) && !in_array($passcode, $csv_array))){
+			echo "<h2 class='text-center text-danger mb-5'>".get_option('h2_heading')."</h2>";
 		}
 		get_footer();
 		return ob_get_clean();
@@ -83,7 +93,7 @@
 		if (mysqli_connect_errno()) {
 			echo "Failed to connect to MySQL: " . mysqli_connect_error();
 		}
-		if (mysqli_num_rows(mysqli_query($connect, $check_code_query)) > 0 || in_array($passcode, $existExhibitors)) {
+		if (mysqli_num_rows(mysqli_query($connect, $check_code_query)) > 0 || in_array($passcode, $existExhibitors) || in_array($passcode, $csv_array)) {
 
 		// FILTER CONTENT
 		function add_additional_php_code($content) {
