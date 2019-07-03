@@ -86,6 +86,12 @@ Yes, You can use only one type of Codes List - manually entered or make them dyn
 
 == Changelog ==
 
+= 1.7 =
+Added Exhibitors Code Checker
+
+= 1.7 =
+Code Optimize
+
 = 1.6 =
 Added CSV Import
 

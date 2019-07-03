@@ -2,7 +2,7 @@
 /*
 Plugin Name: Form Exhibitors Code System
 Description: Wtyczka umożliwiająca generowanie kodów zaproszeniowych dla wystawców oraz tworzenie 'reflinków'.
-Version: 1.6
+Version: 1.8
 Author: Szymon Kaluga
 Author URI: http://skaluga.pl/
 */
@@ -87,7 +87,8 @@ class PageTemplater {
 		// Add your templates to this array.
 		$this->templates = array(
 			'page-checkform.php' => 'Exhibitors Code Checker',
-			'page-registerme.php' => 'Exhibitors Code Maker'
+			'page-registerme.php' => 'Exhibitors Code Maker',
+			'page-checkformexhibitor.php' => 'Check Exhibitor'
 		);
 
 	}
