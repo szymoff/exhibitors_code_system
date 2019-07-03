@@ -2,7 +2,7 @@
 /*
 Plugin Name: Form Exhibitors Code System
 Description: Wtyczka umożliwiająca generowanie kodów zaproszeniowych dla wystawców oraz tworzenie 'reflinków'.
-Version: 1.8
+Version: 1.9
 Author: Szymon Kaluga
 Author URI: http://skaluga.pl/
 */
@@ -251,22 +251,13 @@ add_action('admin_menu', 'my_cool_plugin_create_menu');
 									<div class="inside">
 										<div class="main">
 											<?php
-											settings_fields("code_maker");
-											do_settings_sections("code-maker"); ?> 
-										</div>
-									</div>
-								</div>
-								<div class="postbox">
-									<div class="inside">
-										<div class="main">
-											<?php
 											settings_fields("code_checker");
 											do_settings_sections("code-checker");
 											submit_button();
-											?>         
+											?>    
 										</div>
 									</div>
-								</div> 
+								</div>
 							</form>
 						</div>
 					</div>
@@ -279,15 +270,14 @@ add_action('admin_menu', 'my_cool_plugin_create_menu');
 
     function display_options()
     {
-		add_settings_section("code_maker", "Code System Maker", "display_header_options_content", "code-maker");
 
 		add_settings_section("code_checker", "Code System Checker", "display_header_options_content", "code-checker");
 		
-		add_settings_field("code_prefix", "Code Prefix", "display_code_prefix", "code-maker", "code_maker");
-		register_setting("code_maker", "code_prefix");
+		add_settings_field("code_prefix", "Code Prefix", "display_code_prefix", "code-checker", "code_checker");
+		register_setting("code_checker", "code_prefix");
 		
-		add_settings_field("form_id", "Form ID", "display_form_id", "code-maker", "code_maker");
-		register_setting("code_maker", "form_id");
+		add_settings_field("form_id", "Form ID", "display_form_id", "code-checker", "code_checker");
+		register_setting("code_checker", "form_id");
 
 		add_settings_field("code_list", "List of Exhibitors Codes<hr><p>Lista kodów Wystawców</p>", "display_code_list", "code-checker", "code_checker");      
 		register_setting("code_checker", "code_list");
@@ -345,29 +335,29 @@ add_action('admin_menu', 'my_cool_plugin_create_menu');
 	function display_form_id()
     {
         ?>	
-		<div class="form-field">
-            <input type="text" name="form_id" id="form_id" value="<?php echo get_option('form_id'); ?>" />
-			<p>ID formularza Gravity Forms który generuje kod wystawcy.</p>
-		</div>
+			<div class="form-field">
+				<input type="text" name="form_id" id="form_id" value="<?php echo get_option('form_id'); ?>" />
+				<p>ID formularza Gravity Forms który generuje kod wystawcy.</p>
+			</div>
         <?php
     }
     function display_code_list()
     {
         ?>
-			<div class="form-field">
-				<input type="text" name="code_list" id="code_list" value="<?php echo get_option('code_list'); ?>" />
-				<p>Odziel kody przecinkami, ostatni kod bez przecinka na końcu przykład: XXX,YYY,ZZZ lub zostaw puste.</p>
-			</div>
+		<div class="form-field">
+			<input type="text" name="code_list" id="code_list" value="<?php echo get_option('code_list'); ?>" />
+			<p>Odziel kody przecinkami, ostatni kod bez przecinka na końcu przykład: XXX,YYY,ZZZ lub zostaw puste.</p>
+		</div>
         <?php
 	}
 	
 	function display_h1_heading()
     {
         ?>
-			<div class="form-field">
-				<input type="text" name="h1_heading" id="h1_heading" value="<?php echo get_option('h1_heading'); ?>" />
-				<p>"Wpisz kod zaproszenia, który otrzymałeś od wystawcy"</p>
-			</div>
+		<div class="form-field">
+			<input type="text" name="h1_heading" id="h1_heading" value="<?php echo get_option('h1_heading'); ?>" />
+			<p>"Wpisz kod zaproszenia, który otrzymałeś od wystawcy"</p>
+		</div>
         <?php
 	}
 

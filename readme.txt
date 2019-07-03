@@ -86,7 +86,10 @@ Yes, You can use only one type of Codes List - manually entered or make them dyn
 
 == Changelog ==
 
-= 1.7 =
+= 1.9 =
+Options Save problem solved
+
+= 1.8 =
 Added Exhibitors Code Checker
 
 = 1.7 =
