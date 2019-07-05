@@ -86,6 +86,9 @@ Yes, You can use only one type of Codes List - manually entered or make them dyn
 
 == Changelog ==
 
+= 2.0 =
+Added VIP Codes functionality
+
 = 1.9 =
 Options Save problem solved
 

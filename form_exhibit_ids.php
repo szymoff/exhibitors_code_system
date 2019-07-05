@@ -2,7 +2,7 @@
 /*
 Plugin Name: Form Exhibitors Code System
 Description: Wtyczka umożliwiająca generowanie kodów zaproszeniowych dla wystawców oraz tworzenie 'reflinków'.
-Version: 1.9
+Version: 2.0
 Author: Szymon Kaluga
 Author URI: http://skaluga.pl/
 */
@@ -88,7 +88,8 @@ class PageTemplater {
 		$this->templates = array(
 			'page-checkform.php' => 'Exhibitors Code Checker',
 			'page-registerme.php' => 'Exhibitors Code Maker',
-			'page-checkformexhibitor.php' => 'Check Exhibitor'
+			'page-checkformexhibitor.php' => 'Check Exhibitor Code',
+			'check_vip.php' => 'Check Vip Code'
 		);
 
 	}
@@ -279,11 +280,23 @@ add_action('admin_menu', 'my_cool_plugin_create_menu');
 		add_settings_field("form_id", "Form ID", "display_form_id", "code-checker", "code_checker");
 		register_setting("code_checker", "form_id");
 
-		add_settings_field("code_list", "List of Exhibitors Codes<hr><p>Lista kodów Wystawców</p>", "display_code_list", "code-checker", "code_checker");      
+		add_settings_field("code_list", "List of Visitor Codes<hr><p>Lista kodów dla <strong>odwiedzających</strong></p>", "display_code_list", "code-checker", "code_checker");      
 		register_setting("code_checker", "code_list");
+
+		add_settings_field("exhibit_code_list", "List of Codes for Exhibitors <hr><p>Lista kodów dla <strong>wystawców</strong></p>", "display_exhibit_code_list", "code-checker", "code_checker");      
+		register_setting("code_checker", "exhibit_code_list");
 		
 		add_settings_field("csv_file", "Exhibitors code list in .csv<hr><p>Plik .csv w którym znajdują się kody wystawców.</p>", "display_csv_file_upload", "code-checker", "code_checker");
 		register_setting("code_checker", "csv_file", "csv_file_upload");
+
+		add_settings_field("vip_code_list", "List of VIP Codes<hr><p>Lista kodów VIP</p>", "display_vip_code_list", "code-checker", "code_checker");      
+		register_setting("code_checker", "vip_code_list");
+
+		add_settings_field("vip_csv_file", "VIP code list in .csv<hr><p>Plik .csv w którym znajdują się kody wystawców.</p>", "display_vip_csv_file_upload", "code-checker", "code_checker");
+		register_setting("code_checker", "vip_csv_file", "vip_csv_file_upload");
+
+		add_settings_field("vip_users", "Max VIP users<hr><p>Ilość maksymalnych wejść na <b>jeden</b> kod VIP</p>", "display_vip_users", "code-checker", "code_checker");
+		register_setting("code_checker", "vip_users");
 		
 		add_settings_field("h1_heading", "Form Heading<hr><p>Napis, który pojawia się na samej górze nad polem do wpisania kodu.</p>", "display_h1_heading", "code-checker", "code_checker");      
 		register_setting("code_checker", "h1_heading");
@@ -311,6 +324,17 @@ add_action('admin_menu', 'my_cool_plugin_create_menu');
         return get_option("csv_file");
     }
 
+	function vip_csv_file_upload($options)
+    {
+        if(!empty($_FILES["vip_csv_file"]["tmp_name"]))
+        {
+            $urls = wp_handle_upload($_FILES["vip_csv_file"], array('test_form' => FALSE));
+            $temp = $urls["url"];
+            return $temp;  
+        }
+
+        return get_option("vip_csv_file");
+    }
 
     function display_header_options_content(){echo "";}
     function display_csv_file_upload()
@@ -321,6 +345,15 @@ add_action('admin_menu', 'my_cool_plugin_create_menu');
 				<p>Aktualny plik csv: <code><?php echo get_option("csv_file"); ?></code></p>
 			</div>
         <?php
+	}
+	function display_vip_csv_file_upload()
+    {
+        ?>
+			<div class="form-field">
+				<input type="file" name="vip_csv_file" id="vip_csv_file"  value="<?php echo get_option('vip_csv_file'); ?>" />
+				<p>Aktualny plik csv: <code><?php echo get_option("vip_csv_file"); ?></code></p>
+			</div>
+        <?php
     }
     function display_code_prefix()
     {
@@ -328,6 +361,16 @@ add_action('admin_menu', 'my_cool_plugin_create_menu');
 			<div class="form-field">
 				<input type="text" name="code_prefix" id="code_prefix" value="<?php echo get_option('code_prefix'); ?>" />
 				<p>Prefix do generowania <strong>nowych kodów</strong> dla wystawców.<br>Działanie: <code>PREFIX__</code> gdzie <code>'__'</code> numer wystawcy z kolei liczony od zera.</p>
+			</div>
+            
+        <?php
+	}
+	function display_vip_users()
+    {
+        ?>
+			<div class="form-field">
+				<input type="number" name="vip_users" id="vip_users" value="<?php echo get_option('vip_users'); ?>" />
+				<p>Liczba użyć jednego kodu</p>
 			</div>
             
         <?php
@@ -346,7 +389,27 @@ add_action('admin_menu', 'my_cool_plugin_create_menu');
         ?>
 		<div class="form-field">
 			<input type="text" name="code_list" id="code_list" value="<?php echo get_option('code_list'); ?>" />
-			<p>Odziel kody przecinkami, ostatni kod bez przecinka na końcu przykład: XXX,YYY,ZZZ lub zostaw puste.</p>
+			<p>Odziel kody przecinkami i spacją, ostatni kod bez przecinka na końcu przykład: XXX, YYY, ZZZ lub zostaw puste.</p>
+		</div>
+        <?php
+	}
+
+	function display_exhibit_code_list()
+    {
+        ?>
+		<div class="form-field">
+			<input type="text" name="exhibit_code_list" id="exhibit_code_list" value="<?php echo get_option('exhibit_code_list'); ?>" />
+			<p>Odziel kody przecinkami i spacją, ostatni kod bez przecinka na końcu przykład: XXX, YYY, ZZZ lub zostaw puste.</p>
+		</div>
+        <?php
+	}
+
+	function display_vip_code_list()
+    {
+        ?>
+		<div class="form-field">
+			<input type="text" name="vip_code_list" id="vip_code_list" value="<?php echo get_option('vip_code_list'); ?>" />
+			<p>Odziel kody przecinkami i spacją, ostatni kod bez przecinka na końcu przykład: XXX, YYY, ZZZ lub zostaw puste.</p>
 		</div>
         <?php
 	}
