@@ -5,6 +5,11 @@
 function js_hide_check_input() {
     ob_start();
     if(!empty($_GET["input_value"])){ ?>
+    <style>
+        .dummy, .row-breadcrumb {
+            display: none !important;
+        }
+    </style>
         <script type="text/javascript"> 
             document.querySelector("li.invitation_code div.ginput_container input").value = '<?= $_GET["input_value"] ?>';
             document.querySelector("li.invitation_code").style.display = 'none';
@@ -126,11 +131,20 @@ function add_additional_js_content($content) {
     }
 
 // ======== HELPER FUNCTIONS ==========
-
 // FILTER CONTENT
-function add_additional_php_code($content) {
+function prepend_user_form($content) {
     $original = $content;
     $content .= $original;
+    $content .= do_shortcode('[gravityform id="'.get_option('form_user_id').'" title="true" description="false" ajax="false"]');
+    $content .= do_shortcode('[js_hide_check]');
+    return $content;
+    }
+
+// FILTER CONTENT
+function prepend_vip_form($content) {
+    $original = $content;
+    $content .= $original;
+    $content .= do_shortcode('[gravityform id="'.get_option('form_vip_id').'" title="true" description="false" ajax="false"]');
     $content .= do_shortcode('[js_hide_check]');
     return $content;
     }

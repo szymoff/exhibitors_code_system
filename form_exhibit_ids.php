@@ -2,7 +2,7 @@
 /*
 Plugin Name: Form Exhibitors Code System
 Description: Wtyczka umożliwiająca generowanie kodów zaproszeniowych dla wystawców oraz tworzenie 'reflinków'.
-Version: 2.0
+Version: 2.1
 Author: Szymon Kaluga
 Author URI: http://skaluga.pl/
 */
@@ -86,10 +86,9 @@ class PageTemplater {
 
 		// Add your templates to this array.
 		$this->templates = array(
-			'page-checkform.php' => 'Exhibitors Code Checker',
+			'page-checkform.php' => 'Visitor Code Checker',
 			'page-registerme.php' => 'Exhibitors Code Maker',
-			'page-checkformexhibitor.php' => 'Check Exhibitor Code',
-			'check_vip.php' => 'Check Vip Code'
+			'page-checkformexhibitor.php' => 'Check Exhibitor Code'
 		);
 
 	}
@@ -219,16 +218,19 @@ add_action('admin_menu', 'my_cool_plugin_create_menu');
 						<div class="postbox">
 							<div class="inside">
 								<div class="main">
-								<p><center><strong>Instrukcja:</strong></center><hr></p>
+									<p><center><strong>Instrukcja:</strong></center><hr></p>
 									<ol>
 										<li>Dodanie do <strong>formularza wystawcy</strong> pola <code>type="text"</code> o klasie <code>code</code>,</li>
 										<li>Załączenie tego pola oraz linka do odpowiedniej podstrony w mailu potwierdzającym <strong>dla wystawcy</strong>,</li>
 										<li>Dodanie do <strong>formularza rejestracji dla użytkowników</strong> pola <code>type="text"</code> o klasie <code>invitation_code</code>,</li>
 										<li>Załączenie tego pola w mailu potwierdzającym <strong>dla nas</strong>,</li>
 										<li>Ustawienie <strong>szablonu podstrony z rejestracją wystawców</strong> na <code>Exhibitors Code Maker</code></li>
-										<li>Ustawienie <strong>szablonu podstrony z rejestracją odwiedzających</strong> na <code>Exhibitors Code Checker</code></li>
+										<li>Ustawienie <strong>szablonu podstrony z rejestracją odwiedzających</strong> na <code>Visitor Code Checker</code></li>
 										<li>Uzupełnienie ustawień wtyczki odpowiednimi danymi.</li>
 									</ol>
+									<p><center><strong>UWAGA!</strong></center><hr></p>
+									<p>Teraz wystarczy ustawić <strong>tylko</strong> szablon strony dla VIP-ów i zwykłej rejestracji z kodem na <code>Visitor Code Checker</code>. <strong>Nie należy już dodawać na stronie odpowiedniego formularza</strong> - zostaje on wybrany automatycznie, w zależności czy kod jest dla VIPa czy zwykłego odwiedzającego posiadającego kod od wystawcy lub od nas.</p>
+									<p><center><strong>Zasady tworzenia formularza VIP są identyczne jak dla odwiedzającego z kodem!</strong></center></p>
 								</div>
 							</div>
 						</div>
@@ -277,8 +279,14 @@ add_action('admin_menu', 'my_cool_plugin_create_menu');
 		add_settings_field("code_prefix", "Code Prefix", "display_code_prefix", "code-checker", "code_checker");
 		register_setting("code_checker", "code_prefix");
 		
-		add_settings_field("form_id", "Form ID", "display_form_id", "code-checker", "code_checker");
+		add_settings_field("form_id", "Form Exhibitor ID", "display_form_id", "code-checker", "code_checker");
 		register_setting("code_checker", "form_id");
+
+		add_settings_field("form_vip_id", "Form VIP ID", "display_form_vip_id", "code-checker", "code_checker");
+		register_setting("code_checker", "form_vip_id");
+
+		add_settings_field("form_user_id", "Form Visitor ID", "display_form_user_id", "code-checker", "code_checker");
+		register_setting("code_checker", "form_user_id");
 
 		add_settings_field("code_list", "List of Visitor Codes<hr><p>Lista kodów dla <strong>odwiedzających</strong></p>", "display_code_list", "code-checker", "code_checker");      
 		register_setting("code_checker", "code_list");
@@ -370,7 +378,7 @@ add_action('admin_menu', 'my_cool_plugin_create_menu');
         ?>
 			<div class="form-field">
 				<input type="number" name="vip_users" id="vip_users" value="<?php echo get_option('vip_users'); ?>" />
-				<p>Liczba użyć jednego kodu</p>
+				<p>Maksymalna liczba użyć jednego kodu VIP</p>
 			</div>
             
         <?php
@@ -381,6 +389,24 @@ add_action('admin_menu', 'my_cool_plugin_create_menu');
 			<div class="form-field">
 				<input type="text" name="form_id" id="form_id" value="<?php echo get_option('form_id'); ?>" />
 				<p>ID formularza Gravity Forms który generuje kod wystawcy.</p>
+			</div>
+        <?php
+	}
+	function display_form_user_id()
+    {
+        ?>	
+			<div class="form-field">
+				<input type="text" name="form_user_id" id="form_user_id" value="<?php echo get_option('form_user_id'); ?>" />
+				<p>ID formularza Gravity Forms który rejestruje odwiedzającego po wpisaniu kodu.</p>
+			</div>
+        <?php
+	}
+	function display_form_vip_id()
+    {
+        ?>	
+			<div class="form-field">
+				<input type="text" name="form_vip_id" id="form_vip_id" value="<?php echo get_option('form_vip_id'); ?>" />
+				<p>ID formularza Gravity Forms który rejestruje VIP'a po wpisaniu kodu.</p>
 			</div>
         <?php
     }
@@ -419,7 +445,7 @@ add_action('admin_menu', 'my_cool_plugin_create_menu');
         ?>
 		<div class="form-field">
 			<input type="text" name="h1_heading" id="h1_heading" value="<?php echo get_option('h1_heading'); ?>" />
-			<p>"Wpisz kod zaproszenia, który otrzymałeś od wystawcy"</p>
+			<p>"Wpisz kod zaproszenia, który otrzymałeś"</p>
 		</div>
         <?php
 	}
