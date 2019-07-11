@@ -135,7 +135,7 @@ function add_additional_js_content($content) {
 function prepend_user_form($content) {
     $original = $content;
     $content .= $original;
-    $content .= do_shortcode('[gravityform id="'.get_option('form_user_id').'" title="true" description="false" ajax="false"]');
+    $content .= do_shortcode('[gravityform id="'.get_option('form_user_id').'" title="false" description="false" ajax="false"]');
     $content .= do_shortcode('[js_hide_check]');
     return $content;
     }
@@ -144,7 +144,7 @@ function prepend_user_form($content) {
 function prepend_vip_form($content) {
     $original = $content;
     $content .= $original;
-    $content .= do_shortcode('[gravityform id="'.get_option('form_vip_id').'" title="true" description="false" ajax="false"]');
+    $content .= do_shortcode('[gravityform id="'.get_option('form_vip_id').'" title="false" description="false" ajax="false"]');
     $content .= do_shortcode('[js_hide_check]');
     return $content;
     }
